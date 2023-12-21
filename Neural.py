@@ -60,7 +60,7 @@ class Neural(object):
             average_loss = total_loss / len(training_data)
             print(f"Epoch {epoch + 1}/{epochs}, Average Loss: {average_loss}")
             
-    def save_parameters(self, filename):
+    def save_parameters(self, filename='parameters'):
         np.savez(filename, weights=self.weights, biases=self.biases)
 
     def load_parameters(self, filename):

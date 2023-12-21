@@ -21,4 +21,5 @@ class PongIA(Pong):
             self.ia_direction = 0
         
         data.append((np.array(self.player1.x, self.player1.y, self.player2.x, self.player2.y, self.boll.x, self.boll.y), np.array(self.ia_direction)))
-        
+        rn = Neural.Neural([6,3,3,1])
+        rn.train(data, 20, 0.1)
