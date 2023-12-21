@@ -16,12 +16,12 @@ class Neural(object):
     def sigmoid_derivative(self, z):
         return self.sigmoid(z) * (1 - self.sigmoid(z))
     
-    def feedforward(self, a):
+    def feedforward(self, input):
         for bias, weight in zip(self.biases, self.weights):
-            a = self.sigmoid(np.dot(weight, a) + bias)
-        return a
+            input = self.sigmoid(np.dot(weight, input) + bias)
+        return input
     
-    def backpropagation(self, x, y, learning_rate):
+    def backpropagation(self, x, y, learning_rate=0.01):
         a = x
         activations = [a]
         zs = []
@@ -67,11 +67,15 @@ class Neural(object):
         data = np.load(filename)
         self.weights = data['weights']
         self.biases = data['biases']
+        
+    def predict(self, input):
+        output = self.feedforward(input)
+        return output
 
 if __name__ == '__main__':
     rn = Neural([8, 6, 6, 3])
-    training_data = [(np.random.randn(8, 1), np.random.randn(3, 1)) for _ in range(1000)]
+    training_data = [(np.random.randn(8, 1), np.random.randn(3, 1)) for _ in range(10000)]
     epochs = 10
-    learning_rate = 0.01
 
-    rn.train(training_data, epochs, learning_rate)
+    rn.train(training_data, epochs)
+    rn.predict(np.random.randn(8, 1))
